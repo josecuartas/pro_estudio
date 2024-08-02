@@ -26,7 +26,7 @@
                         ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="logout.php">Salir del sistema</a></li>
+                        <li><a class="dropdown-item" href="/logout.php">Salir del sistema</a></li>
                     </ul>
                 </li>
             </ul>

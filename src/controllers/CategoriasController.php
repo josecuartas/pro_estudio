@@ -7,27 +7,58 @@ class CategoriasController
     /* métodos que me ofrece categorías */
     public static function list()
     {
-        $categoria = new CategoriasModel;
-        $cat_list = ($categoria->all());
+        $categoria = new CategoriasModel();
+        $cat_list = $categoria->all();
         return [
-            'view' => '/categorias/listado.php',
-            'categorias' => $cat_list
+            "view" => "/categorias/listado.php",
+            "form" => [
+                "categorias" => $cat_list,
+            ],
         ];
     }
-    public static function alta()
+
+    public static function new()
     {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $categoria = new CategoriasModel();
+            $categoria->insert($_POST);
+            header("location:/categorias");
+        }
         return [
-            'view' => '/categorias/form.php'
+            "view" => "/categorias/form.php",
+            "form" => [
+                "title" => "Alta de categoría",
+                "button" => "Agregar categoría",
+            ],
         ];
     }
+
     public static function edit()
     {
-        return ['view' => '/categorias/form.php'];
+        $id = $_GET["id"];
+        $categoria = new CategoriasModel();
+        $registro = $categoria->getOne($id);
+        return [
+            "view" => "/categorias/form.php",
+            "form" => [
+                "title" => "Actualizar categoría",
+                "button" => "Actualizar categoría",
+                "registro" => $registro,
+            ],
+        ];
     }
     public static function delete()
     {
-        // echo "Eliminando categoria con id $id";
-        echo "Eliminando categoria con id";
-        die();
+        $id = $_GET["id"];
+        $categoria = new CategoriasModel();
+        $categoria->delete($id);
+        // header('location: /categorias');
+        $cat_list = $categoria->all();
+        return [
+            "view" => "/categorias/listado.php",
+            "form" => [
+                "categorias" => $cat_list,
+            ],
+        ];
     }
 }

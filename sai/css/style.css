@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.imagenn {
+    width: 300px;
+    height: 350px;
+    object-fit: cover;
+}
+
+.imagenformulario {
+    width: 1186px;
+    height: 800px;
+    object-fit: cover;
+}
+
+@font-face {
+    font-family: nunito-reg;
+    src: url(./Nunito-font/static/Nunito-Regular.ttf);
+}
+
+@font-face {
+    font-family: nunito-bold;
+    src: url(./Nunito-font/static/Nunito-Bold.ttf);
+}
+
+@font-face {
+    font-family: nunito-black;
+    src: url(./Nunito-font/static/Nunito-Black.ttf);
+}
+
+@font-face {
+    font-family: nunito-sem;
+    src: url(./Nunito-font/static/Nunito-SemiBold.ttf);
+}
+
+.bg-col {
+    background-color: #441F80;
+}
+
+.txt-col {
+    color: #441F80;
+}
+
+body {
+    /* align-items: center;
+    justify-content: center; */
+    font-family: nunito-reg;
+    font-size: 14px;
+}
+
+.texto1 {
+    font-family: nunito-reg;
+    font-size: 14px;
+}
+
+.texto2 {
+    font-family: nunito-bold;
+    font-size: 14px;
+}
+
+.texto3 {
+    font-family: nunito-black;
+    font-size: 40px;
+}
+
+.texto4 {
+    font-family: nunito-reg;
+    font-size: 16px;
+}
+
+.texto5 {
+    font-family: ninito-sem;
+    font-size: 20px;
+}
+
+.activado {
+    border-left: 4px solid #a57eb4;
+}
+
+.desactivado {
+    border-left: 4px solid lightgray;
+}
+
+@keyframes slide {
+    from {
+        transform: translateX();
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.logos {
+    overflow: hidden;
+    padding: 60px 0;
+    /* background-color: #f2f2f2; */
+    white-space: nowrap;
+    position: relative;
+}
+
+.logos::before,
+.logos:after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+}
+
+.logos::before {
+    left: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0), white);
+}
+
+.logos::after {
+    right: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), white);
+}
+
+.logos:hover .logos-slide {
+    animation-play-state: paused;
+}
+
+.logos-slide {
+    display: inline-block;
+    animation: 20s slide infinite linear;
+}
+
+.logos-slide>img {
+    margin: 0 40px;
+}

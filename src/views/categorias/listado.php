@@ -10,7 +10,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($respuesta['categorias'] as $c) : ?>
+
+            <?php foreach ($respuesta["form"]["categorias"] as $c): ?>
                 <tr>
                     <td><?php echo $c->getCategoria(); ?></td>
                     <td>

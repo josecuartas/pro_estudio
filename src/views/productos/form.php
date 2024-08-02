@@ -1,12 +1,17 @@
 <!-- Page Content -->
 <div class="mt-4 container">
-    <h2><?php echo $respuesta['titulo']; ?></h2>
-    <form action="/productos/new" method="post" enctype="multipart/form-data">
+    <h2><?php echo $respuesta["form"]["title"]; ?></h2>
+    <form action="<?php $respuesta["form"][
+        "action"
+    ]; ?>" method="post" enctype="multipart/form-data">
 
         <div class="row mb-3">
             <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputNombre">
+                <input type="text" name="nombre" class="form-control" id="inputNombre"
+                    value="<?php echo isset($respuesta["form"]["value"])
+                        ? $respuesta["form"]["value"]->getNombre()
+                        : ""; ?>" >
             </div>
         </div>
 
@@ -14,11 +19,11 @@
             <legend class="col-form-label col-sm-2 pt-0">Categorías</legend>
             <div class="col-sm-10">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="pizza">
+                    <input class="form-check-input" name="categoria" type="checkbox" id="inlineCheckbox1" value="pizza">
                     <label class="form-check-label" for="inlineCheckbox1">Pizzas</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="bebida">
+                    <input class="form-check-input" name="categoria" type="checkbox" id="inlineCheckbox2" value="bebida">
                     <label class="form-check-label" for="inlineCheckbox2">Bebidas</label>
                 </div>
             </div>
@@ -41,7 +46,9 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary"><?php echo $respuesta['boton']; ?></button>
+        <button type="submit" class="btn btn-primary"><?php echo $respuesta[
+            "form"
+        ]["button"]; ?></button>
         <button type="button" class="btn btn-primary" onclick="location.href='/productos'">Cancelar</button>
 
     </form>

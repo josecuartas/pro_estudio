@@ -2,7 +2,7 @@
 define('APP', dirname(__DIR__));
 define('CONTROLLERS', APP . '/controllers');
 define('MODELS', APP . '/models');
-define('VIEWS', APP . '/views/');
+define('VIEWS', APP . '/views');
 
 /* Datos de conexión */
 define('DBHOST', 'db');

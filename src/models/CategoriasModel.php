@@ -6,7 +6,7 @@ class CategoriasModel
 {
     private $pdo;
     private int $id;
-    public string $categoria;
+    private string $categoria;
 
     public function getId()
     {
@@ -54,6 +54,14 @@ class CategoriasModel
 
     public function update($post, $id)
     {
+        $this->connect();
+        $stmt = $this->pdo->prepare(
+            "UPDATE categorias SET CATEGORIA=:cat WHERE ID=:id"
+        );
+        $stmt->execute([
+            ":cat" => $post["categoria"],
+            ":id" => $id,
+        ]);
     }
 
     public function insert($post)

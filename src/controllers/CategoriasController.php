@@ -38,6 +38,11 @@ class CategoriasController
         $id = $_GET["id"];
         $categoria = new CategoriasModel();
         $registro = $categoria->getOne($id);
+
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $categoria->update($_POST, $id);
+            header("location:/categorias");
+        }
         return [
             "view" => "/categorias/form.php",
             "form" => [

@@ -7,9 +7,9 @@
             <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
                 <input type="text" name="categoria" class="form-control" id="inputNombre"
-                    value="<?php echo $respuesta["form"][
-                        "registro"
-                    ]->getCategoria(); ?>">
+                    value="<?php echo isset($respuesta["form"]["registro"])
+                        ? $respuesta["form"]["registro"]->getCategoria()
+                        : ""; ?>">
             </div>
         </div>
 

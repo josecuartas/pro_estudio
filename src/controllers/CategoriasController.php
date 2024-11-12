@@ -8,7 +8,7 @@ class CategoriasController
     public static function list()
     {
         $categoria = new CategoriasModel();
-        $cat_list = $categoria->all();
+        $cat_list = $categoria->get_one_much("id,categoria");
         return [
             "view" => "/categorias/listado.php",
             "form" => [
@@ -21,14 +21,16 @@ class CategoriasController
     {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $categoria = new CategoriasModel();
-            $categoria->insert($_POST);
+            $categoria->insert("CATEGORIA=:cat", [
+                ":cat" => $_POST["categoria"],
+            ]);
             header("location:/categorias");
         }
         return [
             "view" => "/categorias/form.php",
             "form" => [
                 "title" => "Alta de categoría",
-                "button" => "Agregar categoría",
+                "button" => "Alata de categoría",
             ],
         ];
     }
@@ -37,10 +39,13 @@ class CategoriasController
     {
         $id = $_GET["id"];
         $categoria = new CategoriasModel();
-        $registro = $categoria->getOne($id);
+        $registro = $categoria->get_one_much("id, categoria", [":id" => $id]);
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $categoria->update($_POST, $id);
+            //$categoria->update($_POST, $id);
+            $columns = "CATEGORIA=:cat";
+            $replace = [":cat" => $_POST["categoria"], ":id" => $id];
+            $categoria->update($columns, $replace);
             header("location:/categorias");
         }
         return [
@@ -56,9 +61,10 @@ class CategoriasController
     {
         $id = $_GET["id"];
         $categoria = new CategoriasModel();
-        $categoria->delete($id);
+        $replace = [":id" => $id];
+        $categoria->delete($replace);
         // header('location: /categorias');
-        $cat_list = $categoria->all();
+        $cat_list = $categoria->all("id, categoria");
         return [
             "view" => "/categorias/listado.php",
             "form" => [

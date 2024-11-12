@@ -1,9 +1,10 @@
 <?php
-$controladores = glob(CONTROLLERS . '/*.php');
-$models = glob(MODELS . '/*.php');
+$controladores = glob(CONTROLLERS . "/*.php");
+$models = glob(MODELS . "/*.php");
+require MODELS . "/EntityModel.php";
 foreach ($controladores as $c) {
-    include_once($c);
+    require_once $c;
 }
 foreach ($models as $m) {
-    include_once($m);
+    require_once $m;
 }

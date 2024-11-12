@@ -5,7 +5,6 @@ if (!isset($_SESSION["user"])) {
 }
 include "src/utils/config.php";
 include "src/utils/autoload.php";
-
 ini_set("display_errors", 1);
 error_reporting(E_ALL);
 //if (!is_dir(VIEWS . $entidad)) $entidad = 'productos';
@@ -23,6 +22,7 @@ if (!method_exists($clase, $accion)) {
 
 $respuesta = $clase::$accion();
 $archivo = $respuesta["view"];
+
 include VIEWS . "/inc/header.php";
 include VIEWS . "$archivo";
 include VIEWS . "/inc/footer.php";

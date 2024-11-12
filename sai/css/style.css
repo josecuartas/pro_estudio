@@ -40,11 +40,13 @@ p {
 }
 
 .bg-col {
-    background-color: #441F80;
+    background-color: #441f80;
+    background-color: #e73332;
 }
 
 .txt-col {
-    color: #441F80;
+    color: #441f80;
+    color: #e73332;
 }
 
 body {
@@ -65,7 +67,7 @@ body {
 }
 
 .texto3 {
-    font-family: nunito-black;
+    font-family: nunito-bold;
     font-size: 40px;
 }
 
@@ -134,6 +136,6 @@ body {
     animation: 20s slide infinite linear;
 }
 
-.logos-slide>img {
+.logos-slide > img {
     margin: 0 40px;
 }

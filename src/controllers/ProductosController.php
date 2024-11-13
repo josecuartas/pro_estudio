@@ -37,8 +37,8 @@ class ProductosController
     }
     public static function edit()
     {
-        $productos = new ProductosModel();
         $id = $_GET["id"];
+        $productos = new ProductosModel();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $columns = "nombre=:name,estado=:state";
             $replace = [

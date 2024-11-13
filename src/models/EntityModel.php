@@ -17,15 +17,13 @@ class EntityModel
         $this->pdo = new PDO($dsn, DBUSER, DBPASS);
     }
 
-    public function get_one_much($columns = "*", $replace = "")
+    public function get_one_much($columns = "*", $replace = " ")
     {
         $this->connect();
-        echo $replace;
         $query = "SELECT $columns FROM $this->tbl";
-        if (!($replace = "")) {
+        if (!($replace = " ")) {
             $query .= " WHERE ID=:id";
         }
-        echo $query;
         $stmt = $this->pdo->prepare($query);
         if (!($repalce = " ")) {
             $stmt->execute($replace);
@@ -34,6 +32,7 @@ class EntityModel
         }
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this));
         //$stmt->setFetchMode(PDO::FETCH_CLASS, CategoriasModel::class);
+
         if (!($replace = " ")) {
             return $stmt->fetch();
         } else {

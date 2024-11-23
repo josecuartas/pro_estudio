@@ -13,6 +13,11 @@ class ProductosModel extends EntityModel
         return $this->id;
     }
 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+    }
+
     public function getNombre()
     {
         return $this->nombre;

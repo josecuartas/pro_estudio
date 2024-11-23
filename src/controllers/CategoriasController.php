@@ -4,11 +4,10 @@
 
 class CategoriasController
 {
-    /* métodos que me ofrece categorías */
     public static function list()
     {
-        $categoria = new CategoriasModel();
-        $cat_list = $categoria->get_one_much("id,categoria");
+        $categorias = new CategoriasModel();
+        $cat_list = $categorias->select("id,categoria");
         return [
             "view" => "/categorias/listado.php",
             "form" => [
@@ -17,29 +16,14 @@ class CategoriasController
         ];
     }
 
-    public static function new()
-    {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $categoria = new CategoriasModel();
-            $categoria->insert("CATEGORIA=:cat", [
-                ":cat" => $_POST["categoria"],
-            ]);
-            header("location:/categorias");
-        }
-        return [
-            "view" => "/categorias/form.php",
-            "form" => [
-                "title" => "Alta de categoría",
-                "button" => "Alata de categoría",
-            ],
-        ];
-    }
-
     public static function edit()
     {
         $id = $_GET["id"];
-        $categoria = new CategoriasModel();
-        $registro = $categoria->get_one_much("id, categoria", [":id" => $id]);
+        $categorias = new CategoriasModel();
+        $columns = "id,categoria";
+        $replace = [":id" => $id];
+        $where = "ID=:id";
+        $registro = $categorias->select($columns, $replace, $where, true);
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //$categoria->update($_POST, $id);
@@ -57,14 +41,34 @@ class CategoriasController
             ],
         ];
     }
+
+    public static function new()
+    {
+        $categorias = new CategoriasModel();
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $categorias->insert("CATEGORIA=:cat", [
+                ":cat" => $_POST["categoria"],
+            ]);
+            header("location:/categorias");
+        }
+        return [
+            "view" => "/categorias/form.php",
+            "form" => [
+                "title" => "Alta de categoría",
+                "button" => "Alata de categoría",
+                "registro" => $categorias,
+            ],
+        ];
+    }
+
     public static function delete()
     {
         $id = $_GET["id"];
-        $categoria = new CategoriasModel();
+        $categorias = new CategoriasModel();
         $replace = [":id" => $id];
-        $categoria->delete($replace);
+        $categorias->delete($replace);
         // header('location: /categorias');
-        $cat_list = $categoria->all("id, categoria");
+        $cat_list = $categorias->all("id, categoria");
         return [
             "view" => "/categorias/listado.php",
             "form" => [

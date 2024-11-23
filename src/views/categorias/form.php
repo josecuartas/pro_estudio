@@ -7,15 +7,15 @@
             <label for="inputNombre" class="col-sm-2 col-form-label">Nombre</label>
             <div class="col-sm-10">
                 <input type="text" name="categoria" class="form-control" id="inputNombre"
-                    value="<?php echo isset($respuesta["form"]["registro"])
-                        ? $respuesta["form"]["registro"]->getCategoria()
-                        : ""; ?>">
+                    value="<?php echo $respuesta["form"][
+                        "registro"
+                    ]->getCategoria(); ?>">
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary"><?php echo $respuesta[
-            "form"
-        ]["button"]; ?></button>
+        <button type="submit" class="btn btn-primary">
+            <?php echo $respuesta["form"]["button"]; ?>
+        </button>
         <button type="button" class="btn btn-primary" onclick="location.href='/categorias'">Cancelar</button>
 
     </form>

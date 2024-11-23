@@ -17,38 +17,30 @@ class EntityModel
         $this->pdo = new PDO($dsn, DBUSER, DBPASS);
     }
 
-    public function get_one_much($columns = "*", $replace = " ")
-    {
+    public function select(
+        $columns = "*",
+        $replace = "",
+        $where = "",
+        $onlyOne = false
+    ) {
         $this->connect();
         $query = "SELECT $columns FROM $this->tbl";
-        if (!($replace = " ")) {
-            $query .= " WHERE ID=:id";
+        if ($where != "") {
+            $query .= " WHERE $where";
         }
+        // if ($where != "") {
+        //     $query .= " WHERE ID=:id";
+        // }
         $stmt = $this->pdo->prepare($query);
-        if (!($repalce = " ")) {
+        if ($replace != "") {
             $stmt->execute($replace);
         } else {
             $stmt->execute();
         }
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this));
         //$stmt->setFetchMode(PDO::FETCH_CLASS, CategoriasModel::class);
-
-        if (!($replace = " ")) {
-            return $stmt->fetch();
-        } else {
-            return $stmt->fetchAll();
-        }
+        return $onlyOne ? $stmt->fetch() : $stmt->fetchAll();
     }
-
-    /*public function getOne($columns, $replace)
-    {
-        $this->connect();
-        $query = "SELECT $columns FROM $this->tbl WHERE ID=:id";
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute($replace);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this));
-        return $stmt->fetch();
-        }*/
 
     public function update($columns, $replace)
     {

@@ -3,7 +3,7 @@
 class CategoriasModel extends EntityModel
 {
     private int $id;
-    private string $categoria;
+    private string $categoria = "";
     protected $tbl = "categorias";
 
     public function getId()

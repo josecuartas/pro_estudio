@@ -19,10 +19,8 @@ $accion = $_GET["a"] ?? "list";
 if (!method_exists($clase, $accion)) {
     die("No existe el método $accion en la clase $clase");
 }
-
 $respuesta = $clase::$accion();
 $archivo = $respuesta["view"];
-
 include VIEWS . "/inc/header.php";
 include VIEWS . "$archivo";
 include VIEWS . "/inc/footer.php";

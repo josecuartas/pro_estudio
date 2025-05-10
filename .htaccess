@@ -1,6 +1,7 @@
 RewriteEngine On
 
-RewriteRule ^([a-z]+)$                     inicio.php?e=$1
-RewriteRule ^([a-z]+)/new$                 inicio.php?e=$1&a=new
-RewriteRule ^([a-z]+)/(\d+)$               inicio.php?e=$1&id=$2&a=edit
-RewriteRule ^([a-z]+)/(\d+)/(edit|delete)$ inicio.php?e=$1&id=$2&a=$3
+RewriteRule ^prueba$                            prueba.php
+RewriteRule ^([a-z]+)$                          inicio.php?e=$1 [NC,QSA]
+RewriteRule ^([a-z]+)/new$                      inicio.php?e=$1&a=new [NC,QSA]
+RewriteRule ^([a-z]+)/(\d+)$                    inicio.php?e=$1&id=$2&a=edit [NC,QSA]
+RewriteRule ^([a-z]+)/(\d+)/(edit|delete)$      inicio.php?e=$1&id=$2&a=$3

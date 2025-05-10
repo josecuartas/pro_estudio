@@ -3,6 +3,9 @@
     <h2>Listado de categorias</h2>
     <a class="btn btn-primary" aria-current="page" href="/categorias/new">Agregar categoría</a>
     <table class="table table-striped">
+        <?php if (isset($_GET["error"])) {
+            echo "<div class='btn btn-warning'>$_GET[error]</div>";
+        } ?>
         <thead>
             <tr>
                 <th>Categoria</th>
@@ -11,7 +14,7 @@
         </thead>
         <tbody>
 
-            <?php foreach ($respuesta["form"]["categorias"] as $c): ?>
+            <?php foreach ($respuesta["categorias"] as $c): ?>
                 <tr>
                     <td><?php echo $c->getCategoria(); ?></td>
                     <td>

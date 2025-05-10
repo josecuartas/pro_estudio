@@ -6,49 +6,41 @@ class CategoriasController
 {
     public static function list()
     {
-        $categorias = new CategoriasModel();
-        $cat_list = $categorias->select("id,categoria");
+        $listado = CategoriasRepository::all();
         return [
             "view" => "/categorias/listado.php",
-            "form" => [
-                "categorias" => $cat_list,
-            ],
+            "categorias" => $listado,
         ];
     }
 
     public static function edit()
     {
         $id = $_GET["id"];
-        $categorias = new CategoriasModel();
-        $columns = "id,categoria";
-        $replace = [":id" => $id];
-        $where = "ID=:id";
-        $registro = $categorias->select($columns, $replace, $where, true);
-
+        $categoria = CategoriasRepository::find($id);
+        if (!$categoria) {
+            header("location: /categorias?error=Categoria a editar, no existe");
+            die();
+        }
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            //$categoria->update($_POST, $id);
-            $columns = "CATEGORIA=:cat";
-            $replace = [":cat" => $_POST["categoria"], ":id" => $id];
-            $categoria->update($columns, $replace);
+            CategoriasRepository::set($categoria, $_POST, $id);
             header("location:/categorias");
         }
+
         return [
             "view" => "/categorias/form.php",
             "form" => [
                 "title" => "Actualizar categoría",
                 "button" => "Actualizar categoría",
-                "registro" => $registro,
+                "registro" => $categoria,
             ],
         ];
     }
 
     public static function new()
     {
-        $categorias = new CategoriasModel();
+        $categoria = CategoriasRepository::new();
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $categorias->insert("CATEGORIA=:cat", [
-                ":cat" => $_POST["categoria"],
-            ]);
+            CategoriasRepository::set($categoria, $_POST);
             header("location:/categorias");
         }
         return [
@@ -56,24 +48,20 @@ class CategoriasController
             "form" => [
                 "title" => "Alta de categoría",
                 "button" => "Alata de categoría",
-                "registro" => $categorias,
+                "registro" => $categoria,
             ],
         ];
     }
 
     public static function delete()
     {
-        $id = $_GET["id"];
-        $categorias = new CategoriasModel();
-        $replace = [":id" => $id];
-        $categorias->delete($replace);
-        // header('location: /categorias');
-        $cat_list = $categorias->all("id, categoria");
-        return [
-            "view" => "/categorias/listado.php",
-            "form" => [
-                "categorias" => $cat_list,
-            ],
-        ];
+        $categoria = CategoriasRepository::find($_GET["id"]);
+        if (!$categoria) {
+            header("location: /categorias?error=Categoría a borrar, no existe");
+            die();
+        }
+        CategoriasRepository::delete($categoria);
+        header("location:/categorias");
+        die();
     }
 }

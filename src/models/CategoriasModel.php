@@ -2,13 +2,32 @@
 //namespace App\Models;
 class CategoriasModel extends EntityModel
 {
+    protected $table = "categorias";
+    protected $alias = "c";
+
     private int $id;
     private string $categoria = "";
-    protected $tbl = "categorias";
+
+    /**
+     * @ManyToMany(targetEntity=CategoriasModel,
+     joinTable=categorizacion,joinColumn=fkcategory,
+     inverseJoinColumn=fkproducto)
+     */
+    //private $atributo;
+
+    public function getTable()
+    {
+        return $this->table;
+    }
 
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setCategoria($categoria)
+    {
+        $this->categoria = $categoria;
     }
 
     public function getCategoria()

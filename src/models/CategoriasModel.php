@@ -2,6 +2,7 @@
 //namespace App\Models;
 class CategoriasModel extends EntityModel
 {
+    private $lalala;
     protected $table = "categorias";
     protected $alias = "c";
 
@@ -25,12 +26,12 @@ class CategoriasModel extends EntityModel
         return $this->id;
     }
 
-    public function setCategoria($categoria)
+    public function setName($categoria)
     {
         $this->categoria = $categoria;
     }
 
-    public function getCategoria()
+    public function getName()
     {
         return $this->categoria;
     }

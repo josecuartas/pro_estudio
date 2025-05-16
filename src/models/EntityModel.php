@@ -104,40 +104,48 @@ class EntityModel
         $this->connect();
         $stmt = $this->pdo->prepare($this->query);
         $stmt->execute($this->replace);
-        echo "EN EXECUTE: ( $this->query ) ( ONLYONE: ( $onlyOne ) ) <br>";
+        //echo "EN EXECUTE: <u>Antes del fetch</u> ( $this->query ) ( ONLYONE: ( $onlyOne ) ) <br>";
         if ($fetch) {
             $stmt->setFetchMode(PDO::FETCH_CLASS, get_class($this));
             if ($onlyOne) {
                 $item = $stmt->fetch();
-                echo "EN EXECUTE: ( UNO ) <br>";
-                //print_r($item);
+                echo "EN EXECUTE: <u>\$stmt->fetch antes de Array map</u><br>";
+                echo "<u>\$onlyOne envía un \$item a mapRelations</u><br>";
+                echo "ID: ";
+                print_r($item->getId());
                 echo "<br>";
+                echo "NOMBRE: ";
+                print_r($item->getName());
+                echo "<br>";
+                echo "TABLE: ";
+                print_r($item->getTable());
+                echo "<hr>";
                 return $this->mapRelations($item);
             } else {
                 $collection = $stmt->fetchAll();
-                echo "EN EXECUTE: ( MUCHOS ) <br>";
+                echo "EN EXECUTE: <u>\$stmt->fetchAll antes de Array map</u><br>";
                 foreach ($collection as $c) {
-                    echo "MUCHOS <br>";
                     echo "ID: ";
                     print_r($c->getId());
+                    echo "<br>";
+                    print_r($c->getName());
                     echo "<br>";
                     echo "TABLE: ";
                     print_r($c->getTable());
                     echo "<br>";
                 }
-                //echo "<hr>";
                 echo "<br>";
                 return array_map(function ($item) {
-                    echo "EN ARRAY_MAP<br>";
-                    //echo "EN ARRAY_MAP<br><pre>";
-                    //print_r($item);
+                    echo "EN ARRAY_MAP <u>envía cada \$item a mapRelations</u><br>";
                     echo "ID: ";
                     print_r($item->getId());
+                    echo "<br>";
+                    echo "NOMBRE: ";
+                    print_r($item->getName());
                     echo "<br>";
                     echo "TABLE: ";
                     print_r($item->getTable());
                     echo "<hr>";
-                    //echo "</pre><hr>";
                     return $this->mapRelations($item);
                 }, $collection);
             }
@@ -146,12 +154,19 @@ class EntityModel
 
     private function mapRelations($item)
     {
-        echo "EN MAPRELATIONS <br>";
+        echo "EN MAPRELATIONS <u>para buscar si el \$item tiene anotattions</u><br>";
         $id = $item->getId();
+        echo "NOMBRE: ";
+        print_r($item->getName());
+        echo "<br>";
         $reflection = new ReflectionClass($item);
         $attributes = $reflection->getProperties();
         foreach ($attributes as $attr) {
             $name = $attr->getName();
+            echo "Entró al foreach de los atributos para ver si tiene anotaciones: ";
+            echo "<u>$name</u> ";
+            print_r($item->getTable());
+            echo "<br>";
             $annotations = $attr->getDocComment();
             if (
                 $annotations &&
@@ -165,25 +180,36 @@ class EntityModel
                 $relationAttrs = $matches[2];
                 $relationMethod = "get" . $relationType . "Rows";
                 $setter = "set" . ucfirst($name);
-                echo "En mapRelations antes: $relationType <br>";
+                echo "Tiene anotaciones antes: $relationType <br>";
                 echo "ID: ";
                 print_r($item->getId());
+                echo "<br>";
+                echo "NOMBRE: ";
+                print_r($item->getName());
                 echo "<br>";
                 echo "TABLE: ";
                 print_r($item->getTable());
                 echo "<br>";
-                print_r($relationAttrs);
-                echo "<br>";
+                echo "<u>setter:</u> ";
                 echo $setter;
+                echo "<br>";
+                echo "<u>Método:</u> ";
+                print_r($relationMethod);
+                echo "<br>";
+                echo "<u>Atributos:</u> ";
+                print_r($relationAttrs);
                 echo "<hr>";
                 $item->$setter(
                     $rows = $this->$relationMethod($relationAttrs, $id)
                 );
-                echo "En mapRelations después rows: <br><pre>";
+                echo "Tiene anotaciones después rows: <br><pre>";
                 print_r($rows);
+                echo "<br>";
+                print_r($item);
                 echo "</pre><hr>";
             }
         }
+        echo "MAPRELATIONS final antes del return \$item; <hr>";
         return $item;
     }
 

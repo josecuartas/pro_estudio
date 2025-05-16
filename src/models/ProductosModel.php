@@ -11,6 +11,10 @@ class ProductosModel extends EntityModel
     private ?int $precio = null;
     private $imagen;
     private string $fecha_alta;
+    /**
+     * @ManyToMany(targetEntity=CategoriasModel,joinTable=categorizacion,joinColumn=fkcategoria,inversedJoinColumn=fkproducto)
+     */
+    private $categorias;
     private string $estado;
     private $fkproveedor;
 
@@ -21,11 +25,6 @@ class ProductosModel extends EntityModel
         OneToMany < -- Devolver un array
         OneToOne < -- Devolver un objeto
     */
-
-    /**
-     * @ManyToMany(targetEntity=CategoriasModel,joinTable=categorizacion,joinColumn=fkcategoria,inversedJoinColumn=fkproducto)
-     */
-    private $categorias;
 
     /*
      * @ManyToOne(targetEntity=ProveedoresModel,inverseJoinColumn=fkproveedor)
@@ -42,12 +41,12 @@ class ProductosModel extends EntityModel
         return $this->id;
     }
 
-    public function setNombre($nombre)
+    public function setName($nombre)
     {
         $this->nombre = $nombre;
     }
 
-    public function getNombre()
+    public function getName()
     {
         return $this->nombre;
     }
